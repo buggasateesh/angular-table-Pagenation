@@ -1,0 +1,94 @@
+<div class="record-container">
+  <mat-card fxLayout="row wrap" fxFlex="100">
+    <div fxLayout="row nowrap" fxLayoutAlign="start start" fxFlex="100">
+      <div fxLayout="row" fxFlex="30" class="pt-4 pl-4">
+        <span class="font-bold font-14">Records Management</span>
+      </div>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxLayoutGap="20px"
+        fxFlex="70"
+      >
+        <mat-form-field class="mr-3" fxFlex="30">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Search" />
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-tab-group fxFlex="100" (selectedTabChange)="onUserTabChange($event)">
+      <mat-tab label="All Users">
+        <mat-table
+          class="mt-4 table-container"
+          fxFlex="100"
+          [dataSource]="allUsersDataSource"
+        >
+          <ng-container matColumnDef="checked">
+            <mat-header-cell
+              fxFlex="10"
+              (click)="selectAllUsers()"
+              *matHeaderCellDef
+            >
+              <mat-checkbox [(ngModel)]="checkedAllUsers"></mat-checkbox>
+            </mat-header-cell>
+            <mat-cell fxFlex="10" *matCellDef="let element">
+              <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="firstName">
+            <mat-header-cell fxFlex="25" *matHeaderCellDef>
+              First Name
+            </mat-header-cell>
+            <mat-cell fxFlex="25" *matCellDef="let element">
+              {{element.firstName}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="lastName">
+            <mat-header-cell fxFlex="25" *matHeaderCellDef>
+              Last Name
+            </mat-header-cell>
+            <mat-cell fxFlex="25" *matCellDef="let element">
+              {{element.lastName}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <mat-header-cell fxFlex="30" *matHeaderCellDef>
+              Email
+            </mat-header-cell>
+            <mat-cell fxFlex="30" *matCellDef="let element">
+              {{element.email}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell fxFlex="10" *matHeaderCellDef>
+              Action
+            </mat-header-cell>
+            <mat-cell fxFlex="10" *matCellDef="let row; let i=index;">
+              <button
+                mat-icon-button
+                class="viewButton"
+                (click)="view(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)"
+              >
+                <mat-icon aria-label="Delete">remove_red_eye</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="allUsersColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: allUsersColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator
+          #allUsersPaginator
+          [pageIndex]="pageIndex"
+          [length]="pageLength"
+          [pageSize]="5"
+          [pageSizeOptions]="[5,10,15]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
