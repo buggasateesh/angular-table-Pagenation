@@ -61,7 +61,6 @@ export class TablePaginationExample implements OnInit {
     this.pageLength = this.allUsers.length;
   }
 
- 
 
   view(i: number, id: number, title: string, state: string, url: string, created_at: string, updated_at: string) {
 
